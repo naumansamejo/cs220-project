@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 // IMPORT MODELS
@@ -7,8 +6,6 @@ require('./models/Product');
 
 const app = express();
 
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || `mongodb://localhost:27017/node-react-starter`);
 
 app.use(bodyParser.json());
 
@@ -24,6 +21,13 @@ if (process.env.NODE_ENV === 'production') {
   })
 
 }
+
+
+
+
+app.get("/", function(req, res){
+  res.send("This is just a fun site, by nauman. ;)");
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
