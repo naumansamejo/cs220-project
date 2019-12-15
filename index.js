@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // IMPORT MODELS
-require('./models/Product');
+// require('./models/Product');
 
 const app = express();
 
@@ -24,10 +24,11 @@ if (process.env.NODE_ENV === 'production') {
 
 
 
-
+app.use('/data', express.static('data'));
 app.get("/", function(req, res){
   res.send("This is just a fun site, by nauman. ;)");
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -1,43 +1,78 @@
 import React, { useState, useEffect } from "react";
 
+import './App.css';
+
+import Menu from "./components/menu/menu";
+import Products from './products';
+import Product from './product';
+
+
 // SERVICES
-import productService from './services/productService';
+// import productService from './services/productService';
+
+import {
+	BrowserRouter,
+	Switch,
+	Route,
+	useParams
+} from "react-router-dom";
+
 
 function App() {
-  const [products, setproducts] = useState(null);
+	
+	useEffect(()=>(
+		document.title = "DBS Store"
+	));
 
-  useEffect(() => {
-    if(!products) {
-      getProducts();
-    }
-  })
+	return (
+		
+		<BrowserRouter>
+	
+			<Menu />
+			
+			
+			
+			<div className='content-main'>
+				
+				<Switch>
+					
+					<Route path="/register" component={Register} />
+					<Route path="/login" component={Login} />
+					
+					<Route path="/products/:category" component={Products} ></Route>
+					
+					<Route path="/product/:id" component={Product}></Route>
 
-  const getProducts = async () => {
-    let res = await productService.getAll();
-    console.log(res);
-    setproducts(res);
-  }
 
-  const renderProduct = product => {
-    return (
-      <li key={product._id} className="list__item product">
-        <h3 className="product__name">{product.name}</h3>
-        <p className="product__description">{product.description}</p>
-      </li>
-    );
-  };
+					<Route exact path="/" component={Home} />
+					<Route>
+						Error 404
+					</Route>
+					
 
-  return (
-    <div className="App">
-      <ul className="list">
-        {(products && products.length > 0) ? (
-          products.map(product => renderProduct(product))
-        ) : (
-          <p>No products found</p>
-        )}
-      </ul>
-    </div>
-  );
+				</Switch>
+
+			</div>
+		
+		</BrowserRouter>
+	);
 }
+
+
+
+
+
+function Register() {
+	return <div>Register!!</div>;
+}
+function Login() {
+	return <div>Login!!</div>;
+}
+function Home(){
+	return <div>Cool stuff will be here, soon.</div>;
+}
+
+
+
 
 export default App;
